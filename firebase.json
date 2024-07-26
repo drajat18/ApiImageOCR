@@ -7,9 +7,10 @@
       "**/node_modules/**"
     ],
     "rewrites": [
+      
       {
-        "source": "**",
-        "function": "/public/index.html"
+        "source": "/api/app",
+        "function": "app"
       }
     ]
   },

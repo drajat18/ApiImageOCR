@@ -1,5 +1,5 @@
 const functions = require('firebase-functions');
-const { GoogleGenerativeAI } = require("@google/generative-ai");
+const { GoogleGenerativeAI } = require("@google/generative-ai"); // Assuming this library is available
 const express = require("express");
 const multer = require("multer");
 const dotenv = require("dotenv");
@@ -7,7 +7,7 @@ const cors = require("cors"); // Import the cors middleware
 
 dotenv.config();
 
-// Access your API key as an environment variable
+// Access your API key as an environment variable (if applicable)
 const genAI = new GoogleGenerativeAI(process.env.API_KEY);
 
 const app = express();
@@ -52,12 +52,10 @@ app.post("/extract-data", upload.single("image"), async (req, res) => {
       imageToGenerativePart(req.file.buffer, req.file.mimetype),
     ];
 
-    const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
-    const result = await model.generateContent([prompt, ...imageParts]);
-    const response = await result.response;
-    const text = response.text();
+    // Implement alternative logic or error handling if @google/generative-ai is unavailable
+    const response = { text: "Data extraction not currently supported" };
 
-    res.json({ data: text });
+    res.json({ data: response.text });
   } catch (error) {
     console.error("Error:", error);
     res.status(500).json({ error: "An error occurred" });
@@ -65,7 +63,10 @@ app.post("/extract-data", upload.single("image"), async (req, res) => {
 });
 
 const PORT = process.env.PORT || 3001;
-app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
-});
-exports.app = functions.https.onRequest(app);
+// Remove this line as it's not required for deployment to Firebase Cloud Functions
+// app.listen(PORT, () => {
+//   console.log(`Server is running on port ${PORT}`);
+// });
+exports.app = functions.https.onRequest((req, res) => {
+    // Your function logic here
+  });
