@@ -1,3 +1,4 @@
+const functions = require('firebase-functions');
 const { GoogleGenerativeAI } = require("@google/generative-ai");
 const express = require("express");
 const multer = require("multer");
@@ -67,3 +68,4 @@ const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
+exports.app = functions.https.onRequest(app);
